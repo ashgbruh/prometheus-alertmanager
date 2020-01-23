@@ -1,0 +1,41 @@
+global:
+  resolve_timeout: 5m #Resolve timeout is just how long an unanswered alert will exist before it is declared resolved. So if we were to bring the Jenkins Server back on live right now and 5 minutes were to pass, then our alert about the Jenkins Server would completely disappear. 
+
+route: #The root node of the routing tree.
+  group_by: ['alertname'] #This means it is automatically grouping alerts by it's name  
+  group_wait: 10s #This determines how long to wait before it sends the initial notification for that group. 
+  group_interval: 5s #Group interval defines how long since the last notification was sent before it will send an alert
+  repeat_interval: 1m
+  receiver: 'slack'
+
+  routes: #This will define alternate routes that are alert can take depending on what we provide them 
+    - match:
+        team: devops
+      receiver: 'slack'
+    - match:
+        team: external_devops
+      receiver: 'slack2'
+        
+
+receivers: #A list of notification receivers.
+- name: 'slack'
+  slack_configs:
+    - channel: "#prometheus-monitoring"
+      api_url: https://hooks.slack.com/services/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
+      text: "Server is down Yo!!"
+
+
+- name: 'slack2'
+  slack_configs:
+    - channel: "#prometheus-monitoring"
+      api_url: https://hooks.slack.com/services/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
+      text: "External Jenkins Server is downnnnnnnnnnnnnnnnnnnnnnnnnnnnnn!!"
+
+
+
+inhibit_rules:
+  - source_match:
+      severity: 'page'
+    target_match:
+      severity: 'ticket'
+    equal: ['team']

@@ -1,0 +1,20 @@
+groups: 
+  - name: uptime
+    rules: 
+      - record: job:uptime:average:Jenkins_local
+        expr: avg without (instance) (up{job="Jenkins_local"}) 
+      - alert: JenkinsDown
+        expr: job:uptime:average:Jenkins_local < .75
+
+        labels: 
+          team: devops
+
+  - name: external_jenkins_uptime
+    rules:
+      - record: job:uptime:average:Jenkins
+        expr: avg without (instance) (up{job="Jenkins"})
+      - alert: External_JenkinsDown
+        expr: job:uptime:average:Jenkins < .75
+
+        labels:
+          team: external_devops
