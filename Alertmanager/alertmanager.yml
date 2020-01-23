@@ -21,14 +21,14 @@ receivers: #A list of notification receivers.
 - name: 'slack'
   slack_configs:
     - channel: "#prometheus-monitoring"
-      api_url: https://hooks.slack.com/services/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
+      api_url: #Refer to Slack website to build API
       text: "Server is down Yo!!"
 
 
 - name: 'slack2'
   slack_configs:
     - channel: "#prometheus-monitoring"
-      api_url: https://hooks.slack.com/services/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
+      api_url: #Refer to Slack website to build API
       text: "External Jenkins Server is downnnnnnnnnnnnnnnnnnnnnnnnnnnnnn!!"
 
 
