@@ -30,9 +30,7 @@ sudo chown prometheus:prometheus /usr/local/bin/prometheus
 sudo chown prometheus:prometheus /usr/local/bin/promtool
 
 #Create the service file:
-sudo vim /etc/systemd/system/prometheus.service
-
-Add:
+echo "
 
 [Unit]
 Description=Prometheus
@@ -51,6 +49,8 @@ ExecStart=/usr/local/bin/prometheus \
 
 [Install]
 WantedBy=multi-user.target
+
+" >> /etc/systemd/system/prometheus.service
 
 sudo systemctl daemon-reload
 sudo systemctl start prometheus
